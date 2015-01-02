@@ -37,6 +37,10 @@ public class HomeController {
 		
 		Person p = personService.getPersonByName("Smith, Bob");
 		
+		if (p == null) {
+			p = new Person("Smith, Bob");
+		}
+		
 		Artwork a = new Artwork(title);
 		
 		personService.contributeToArtwork(p, a);
