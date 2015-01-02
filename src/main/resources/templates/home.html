@@ -8,9 +8,8 @@
     <p th:text="'Hello, ' + ${message} + '!'" />
     <p th:text="'Artist is ' + ${person.name}" />
     
-    <p th:text="'Artwork is ' + ${artwork.title}" />
-    <!--/* <p th:each="artwork : ${artworks}">
+    <p th:each="artwork : ${artworks}">
     	<span th:text="${artwork.title}"></span><span th:text="'(' + ${artwork.id} + ')'"></span>
-    </p> */-->
+    </p>
 </body>
 </html>

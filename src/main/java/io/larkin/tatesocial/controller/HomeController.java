@@ -1,22 +1,21 @@
 package io.larkin.tatesocial.controller;
 
-import java.util.Set;
-
 import io.larkin.tatesocial.model.Artwork;
 import io.larkin.tatesocial.model.Person;
 import io.larkin.tatesocial.repository.ArtworkRepository;
-import io.larkin.tatesocial.repository.PersonRepository;
+import io.larkin.tatesocial.service.PersonService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomeController {
-
+	
 	@Autowired
-	PersonRepository personRepository;
+	PersonService personService;
 	
 	@Autowired
 	ArtworkRepository artworkRepository;
@@ -24,33 +23,25 @@ public class HomeController {
 	@RequestMapping("/")
 	public String index(Model model) {
 		model.addAttribute("message", "Welcome to the Tate social app.");
-		//Person person = personRepository.getPersonByName("Soest, Gilbert");
-		Person person = personRepository.getPersonById(new Long(14));
-		model.addAttribute("person", person);
 		
-		Artwork artwork = artworkRepository.getArtworkById(new Long(32187));
-		model.addAttribute("artwork", artwork);
+		Person bob = personService.getPersonByName("Smith, Bob");
+		model.addAttribute("person", bob);
+	
+		model.addAttribute("artworks", bob.artworks);
 		
-//		
-//		Iterable<Artwork> artworks = artworkRepository.getArtworksByPerson(person);
-//		//Set<Artwork> artworks = person.getArtworks();
-//		
-//		int count = 0;
-//		for (Artwork a : artworks) {
-//			count++;
-//			String s = a.getTitle();
-//			Long i = a.getId();
-//		}
-//		
-//		model.addAttribute("artworks", artworks);
-//		
 		return "home";
 	}
 	
-	@RequestMapping("/addTest")
-	public String addTest(Model model) {
+	@RequestMapping("/contribute")
+	public String contribute(@RequestParam String title, Model model) {
 		
+		Person p = personService.getPersonByName("Smith, Bob");
 		
+		Artwork a = new Artwork(title);
+		
+		personService.contributeToArtwork(p, a);
+
+		model.addAttribute("node", 1);
 		
 		return "addTest";
 	}

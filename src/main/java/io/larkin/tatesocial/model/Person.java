@@ -1,7 +1,10 @@
 package io.larkin.tatesocial.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import org.neo4j.graphdb.Direction;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -9,32 +12,21 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 @NodeEntity
 public class Person {
 
-	@GraphId
-	Long id;
+	@GraphId Long id;
 	
-	//@Indexed(indexName = "search")
-	String name;
-
-	@RelatedTo(type = "CONTRIBUTED_TO")
-    Set<Artwork> artworks;
+	public String name;
 	
-	public Set<Artwork> getArtworks() {
-		return artworks;
+	public Person() {}
+    public Person(String name) { this.name = name; }
+
+	@RelatedTo(type = "CONTRIBUTED_TO", direction=Direction.OUTGOING)
+    public @Fetch Set<Artwork> artworks;
+	
+	public void contributedTo(Artwork artwork) {
+		if (artworks == null) {
+			artworks = new HashSet<Artwork>();
+		}
+		artworks.add(artwork);
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 }

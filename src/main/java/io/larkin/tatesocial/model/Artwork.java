@@ -17,6 +17,9 @@ public class Artwork {
 	
 	private String acno;
 	
+	public Artwork() { }
+	public Artwork(String title) { this.title = title; }
+	
 	@RelatedTo(type = "CONTRIBUTED_TO", direction = Direction.INCOMING)
 	private Set<Person> contributors;
 

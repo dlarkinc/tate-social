@@ -17,6 +17,11 @@ public class Contribution {
 	@EndNode
 	private Artwork artwork;
 
+	public Contribution(Person p, Artwork a) {
+		this.artist = p;
+		this.artwork = a;
+	}
+	
 	public Long getId() {
 		return id;
 	}
