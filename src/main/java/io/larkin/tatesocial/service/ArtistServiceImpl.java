@@ -8,25 +8,25 @@ import org.springframework.data.neo4j.core.GraphDatabase;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.larkin.tatesocial.model.Person;
-import io.larkin.tatesocial.repository.PersonRepository;
+import io.larkin.tatesocial.model.Artist;
+import io.larkin.tatesocial.model.Artwork;
+import io.larkin.tatesocial.repository.ArtistRepository;
 
 @Service
 @Transactional
-public class PersonServiceImpl implements PersonService {
+public class ArtistServiceImpl implements ArtistService {
 
 	@Autowired
-	PersonRepository repo;
+	ArtistRepository repo;
 	
 	@Autowired
     GraphDatabase graphDatabase;
 	
-	@Override
-	public Person getPersonByName(String name) {
+	public Artist getArtistByName(String name) {
 		return repo.findByName(name);
 	}
 	
-	public void savePerson(Person p) {
+	public void saveArtist(Artist p) {
 		Transaction tx = graphDatabase.beginTx();
         try {
         	repo.save(p);
@@ -36,8 +36,19 @@ public class PersonServiceImpl implements PersonService {
         }
 	}
 
+	public void contributeToArtwork(Artist artist, Artwork artwork) {
+		artist.contributedTo(artwork);
+		Transaction tx = graphDatabase.beginTx();
+		try {
+        	repo.save(artist);
+        	tx.success();
+        } finally {
+        	tx.close();
+        }
+	}
+
 	@Override
-	public Page<Person> getPersonPage(Pageable pageable) {
+	public Page<Artist> getArtistPage(Pageable pageable) {
 		return repo.findAll(pageable);
 	}
 }

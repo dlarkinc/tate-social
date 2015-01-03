@@ -1,6 +1,8 @@
 package io.larkin.tatesocial.service;
 
-import io.larkin.tatesocial.model.Artwork;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import io.larkin.tatesocial.model.Person;
 
 public interface PersonService {
@@ -9,5 +11,5 @@ public interface PersonService {
 	
 	void savePerson(Person p);
 	
-	void contributeToArtwork(Person p, Artwork a);
+	Page<Person> getPersonPage(Pageable pageable);
 }

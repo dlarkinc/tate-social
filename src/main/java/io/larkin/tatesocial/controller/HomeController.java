@@ -1,8 +1,10 @@
 package io.larkin.tatesocial.controller;
 
+import io.larkin.tatesocial.model.Artist;
 import io.larkin.tatesocial.model.Artwork;
 import io.larkin.tatesocial.model.Person;
 import io.larkin.tatesocial.repository.ArtworkRepository;
+import io.larkin.tatesocial.service.ArtistService;
 import io.larkin.tatesocial.service.PersonService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HomeController {
 	
 	@Autowired
-	PersonService personService;
+	ArtistService artistService;
 	
 	@Autowired
 	ArtworkRepository artworkRepository;
@@ -24,10 +26,10 @@ public class HomeController {
 	public String index(Model model) {
 		model.addAttribute("message", "Welcome to the Tate social app.");
 		
-		Person bob = personService.getPersonByName("Smith, Bob");
+		Artist bob = artistService.getArtistByName("Smith, Bob");
 		model.addAttribute("person", bob);
 	
-		model.addAttribute("artworks", bob.artworks);
+		model.addAttribute("artworks", bob.getArtworks());
 		
 		return "home";
 	}
@@ -35,15 +37,15 @@ public class HomeController {
 	@RequestMapping("/contribute")
 	public String contribute(@RequestParam String title, Model model) {
 		
-		Person p = personService.getPersonByName("Smith, Bob");
+		Artist artist = artistService.getArtistByName("Smith, Bob");
 		
-		if (p == null) {
-			p = new Person("Smith, Bob");
+		if (artist == null) {
+			artist = new Artist("Smith, Bob");
 		}
 		
-		Artwork a = new Artwork(title);
+		Artwork artwork = new Artwork(title);
 		
-		personService.contributeToArtwork(p, a);
+		artistService.contributeToArtwork(artist, artwork);
 
 		model.addAttribute("node", 1);
 		

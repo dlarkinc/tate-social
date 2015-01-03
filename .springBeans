@@ -8,7 +8,6 @@
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
 		<config>java:io.larkin.tatesocial.TateSocialApplication</config>
-		<config>src/main/resources/app-config.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

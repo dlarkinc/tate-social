@@ -15,7 +15,6 @@ import org.springframework.data.neo4j.config.Neo4jConfiguration;
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
-@ImportResource("app-config.xml")
 @EnableNeo4jRepositories(basePackages = "io.larkin.tatesocial.repository")
 public class TateSocialApplication extends Neo4jConfiguration {
 

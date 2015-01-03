@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Artists</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<table>
+      <tr>
+        <th>NAME</th>
+      </tr>
+      <tr th:each="artist : ${artists}">
+        <td th:text="${artist.name} + '[' + ${artist.artworks.size()} + ' artwork(s)]'"></td>
+      </tr>
+    </table>
+    <div th:if="${artists.hasPrevious()}">
+    	<a th:href="@{/artist/page/__${artists.getNumber()}__}">&lt; Prev</a>
+    </div>
+    <div th:if="${artists.hasNext()}">
+    	<a th:href="@{/artist/page/__${artists.getNumber()+2}__}">Next &gt;</a>
+    </div>
+    <p th:text="'Page ' + ${artists.getNumber()+1} + ' of ' + ${artists.getTotalPages()}"></p>
+</body>
+</html>

@@ -1,15 +1,18 @@
 package io.larkin.tatesocial.repository;
 
-import io.larkin.tatesocial.model.Artwork;
 import io.larkin.tatesocial.model.Person;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.neo4j.annotation.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface PersonRepository  extends CrudRepository<Person, String> {
+public interface PersonRepository  extends PagingAndSortingRepository<Person, String> {
 	
 	Person findById(Long id);
 	
 	Person findByName(String name);
 	
-	Iterable<Artwork> findByArtworksTitle(String title);
+	@Query(value="MATCH (person:Person) RETURN person", countQuery="MATCH (person:Person) return count(person)")
+	Page<Person> findAll(Pageable page);
 }
