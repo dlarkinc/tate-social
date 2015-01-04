@@ -3,7 +3,7 @@ package io.larkin.tatesocial.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import io.larkin.tatesocial.model.Person;
+import io.larkin.tatesocial.entity.Person;
 
 public interface PersonService {
 	

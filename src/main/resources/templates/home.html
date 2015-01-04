@@ -9,7 +9,10 @@
     <p th:text="'Artist is ' + ${person.name}" />
     
     <p th:each="artwork : ${artworks}">
-    	<span th:text="${artwork.title}"></span><span th:text="'(' + ${artwork.id} + ')'"></span>
+    	<span th:text="${artwork.title}"></span>
+   		<p th:each="movement: ${artwork.movements}">
+   			<span th:text="${movement.name}"></span>
+   		</p>
     </p>
 </body>
 </html>

@@ -1,6 +1,6 @@
 package io.larkin.tatesocial.repository;
 
-import io.larkin.tatesocial.model.Person;
+import io.larkin.tatesocial.entity.Person;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

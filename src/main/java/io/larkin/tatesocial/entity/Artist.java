@@ -1,4 +1,4 @@
-package io.larkin.tatesocial.model;
+package io.larkin.tatesocial.entity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,15 +24,17 @@ public class Artist extends Person {
 		return artworks;
 	}
 
-	public void setArtworks(Set<Artwork> artworks) {
-		this.artworks = artworks;
-	}
-
 	public void contributedTo(Artwork artwork) {
 		if (artworks == null) {
 			artworks = new HashSet<Artwork>();
 		}
 		artworks.add(artwork);
 	}
-
+	
+	@RelatedTo(type = "PART_OF", direction=Direction.OUTGOING)
+	private @Fetch Set<Movement> movements;
+	
+	public Set<Movement> getMovements() {
+		return movements;
+	}
 }

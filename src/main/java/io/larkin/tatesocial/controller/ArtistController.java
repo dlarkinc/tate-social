@@ -1,6 +1,6 @@
 package io.larkin.tatesocial.controller;
-
-import io.larkin.tatesocial.model.Artist;
+ 
+import io.larkin.tatesocial.entity.Artist;
 import io.larkin.tatesocial.service.ArtistService;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package io.larkin.tatesocial.model;
+package io.larkin.tatesocial.entity;
 
 import java.util.Set;
 

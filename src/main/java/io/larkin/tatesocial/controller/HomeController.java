@@ -1,8 +1,8 @@
 package io.larkin.tatesocial.controller;
 
-import io.larkin.tatesocial.model.Artist;
-import io.larkin.tatesocial.model.Artwork;
-import io.larkin.tatesocial.model.Person;
+import io.larkin.tatesocial.entity.Artist;
+import io.larkin.tatesocial.entity.Artwork;
+import io.larkin.tatesocial.entity.Person;
 import io.larkin.tatesocial.repository.ArtworkRepository;
 import io.larkin.tatesocial.service.ArtistService;
 import io.larkin.tatesocial.service.PersonService;
@@ -10,6 +10,7 @@ import io.larkin.tatesocial.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,11 +23,11 @@ public class HomeController {
 	@Autowired
 	ArtworkRepository artworkRepository;
 	
-	@RequestMapping("/")
-	public String index(Model model) {
+	@RequestMapping("/artist/name/{name}")
+	public String index(@PathVariable String name, Model model) {
 		model.addAttribute("message", "Welcome to the Tate social app.");
 		
-		Artist bob = artistService.getArtistByName("Smith, Bob");
+		Artist bob = artistService.getArtistByName(name);
 		model.addAttribute("person", bob);
 	
 		model.addAttribute("artworks", bob.getArtworks());
@@ -50,5 +51,18 @@ public class HomeController {
 		model.addAttribute("node", 1);
 		
 		return "addTest";
+	}
+
+	@RequestMapping("/artist/add/{name}")
+	public String add(@PathVariable String name, Model model) {
+		
+		if (name != null && name.length() > 0) {
+			artistService.saveArtist(new Artist(name));
+			model.addAttribute("name", name);
+		} else {
+			model.addAttribute("name", "[no name]");
+		}
+		
+		return "artist/add";
 	}
 }

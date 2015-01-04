@@ -1,4 +1,4 @@
-package io.larkin.tatesocial.model;
+package io.larkin.tatesocial.entity;
 
 import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.GraphId;

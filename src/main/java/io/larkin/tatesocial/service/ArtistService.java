@@ -3,8 +3,8 @@ package io.larkin.tatesocial.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import io.larkin.tatesocial.model.Artist;
-import io.larkin.tatesocial.model.Artwork;
+import io.larkin.tatesocial.entity.Artist;
+import io.larkin.tatesocial.entity.Artwork;
 
 public interface ArtistService {
 	

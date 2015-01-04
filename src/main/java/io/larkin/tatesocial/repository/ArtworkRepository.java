@@ -1,7 +1,7 @@
 package io.larkin.tatesocial.repository;
 
-import io.larkin.tatesocial.model.Artwork;
-import io.larkin.tatesocial.model.Person;
+import io.larkin.tatesocial.entity.Artwork;
+import io.larkin.tatesocial.entity.Person;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
