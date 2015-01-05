@@ -17,7 +17,7 @@ public class Artist extends Person {
 		super(name);
 	}
 	
-	@RelatedTo(type = "CONTRIBUTED_TO", direction=Direction.OUTGOING)
+	@RelatedTo(type = "CONTRIBUTED_TO",direction=Direction.OUTGOING)
 	private @Fetch Set<Artwork> artworks;
 	
 	public Set<Artwork> getArtworks() {
