@@ -44,6 +44,10 @@ public class HomeController {
 			artist = new Artist("Smith, Bob");
 		}
 		
+		if (p == null) {
+			p = new Person("Smith, Bob");
+		}
+		
 		Artwork artwork = new Artwork(title);
 		
 		artistService.contributeToArtwork(artist, artwork);
