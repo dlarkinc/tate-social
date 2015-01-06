@@ -2,10 +2,8 @@ package io.larkin.tatesocial.controller;
 
 import io.larkin.tatesocial.entity.Artist;
 import io.larkin.tatesocial.entity.Artwork;
-import io.larkin.tatesocial.entity.Person;
 import io.larkin.tatesocial.repository.ArtworkRepository;
 import io.larkin.tatesocial.service.ArtistService;
-import io.larkin.tatesocial.service.PersonService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
