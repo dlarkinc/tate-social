@@ -63,4 +63,16 @@ public class HomeController {
 		
 		return "artist/add";
 	}
+	
+	@RequestMapping("/hello")
+	public String hello() {
+		
+		return "hello";
+	}
+	
+	@RequestMapping("/login")
+	public String login() {
+		
+		return "login";
+	}
 }
