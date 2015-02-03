@@ -34,6 +34,13 @@ public class ArtistController {
 		return "artist/index";
 	}
 	
+	@RequestMapping("/{NodeId}")
+	public String view(@PathVariable Long nodeId, Model model) {
+		Artist artist = artistService.getArtistById(nodeId);
+		model.addAttribute("artist", artist);
+		return "artist/view";
+	}
+
 	@RequestMapping("/page/{pageNum}")
 	public String indexPaged(@PathVariable int pageNum, Model model) {
 		
@@ -46,5 +53,10 @@ public class ArtistController {
 		model.addAttribute("artists", artists);
 		
 		return "artist/index";
+	}
+	
+	@RequestMapping("/{nodeId}/appreciate/{toggle}")
+	public void appreciate(@PathVariable int nodeId, @PathVariable boolean toggle, Model model) {
+		
 	}
 }

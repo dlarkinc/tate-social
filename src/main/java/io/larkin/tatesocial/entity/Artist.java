@@ -54,4 +54,11 @@ public class Artist {
 	public Set<Movement> getMovements() {
 		return movements;
 	}
+	
+	@RelatedTo(type = "APPRECIATES", direction = Direction.INCOMING)
+	private Set<User> users;
+	
+	public Set<User> getUsers() {
+		return users;
+	}
 }

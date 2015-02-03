@@ -11,6 +11,8 @@ public interface ArtistRepository  extends PagingAndSortingRepository<Artist, St
 	
 	Artist findByName(String name);
 	
+	Artist findById(Long id);
+	
 	@Query(value="MATCH (artist:Artist) RETURN artist", countQuery="MATCH (artist:Artist) return count(artist)")
 	Page<Artist> findAll(Pageable page);
 }

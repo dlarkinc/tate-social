@@ -31,4 +31,9 @@ public class ArtistServiceImpl implements ArtistService {
 	public Page<Artist> getArtistPage(Pageable pageable) {
 		return repo.findAll(pageable);
 	}
+
+	@Override
+	public Artist getArtistById(Long id) {
+		return repo.findById(id);
+	}
 }

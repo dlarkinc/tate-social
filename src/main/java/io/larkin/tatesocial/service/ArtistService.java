@@ -10,6 +10,8 @@ public interface ArtistService {
 	
 	Artist getArtistByName(String name);
 	
+	Artist getArtistById(Long id);
+	
 	void saveArtist(Artist artist);
 	
 	void contributeToArtwork(Artist artist, Artwork artwork);

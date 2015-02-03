@@ -7,12 +7,14 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.config.Neo4jConfiguration;
 
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
+@ImportResource("security-config.xml")
 @EnableNeo4jRepositories(basePackages = "io.larkin.tatesocial.repository")
 public class TateSocialApplication extends Neo4jConfiguration {
 
