@@ -1,7 +1,6 @@
-package io.larkin.tatesocial.repository;
+package io.larkin.tatesocial.service;
 
 import io.larkin.tatesocial.entity.User;
-import io.larkin.tatesocial.service.SocialUserDetails;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetailsService;

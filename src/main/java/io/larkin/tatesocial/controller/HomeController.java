@@ -1,12 +1,18 @@
 package io.larkin.tatesocial.controller;
 
+import io.larkin.tatesocial.dao.UserDao;
 import io.larkin.tatesocial.entity.Artist;
 import io.larkin.tatesocial.entity.Artwork;
+import io.larkin.tatesocial.entity.User;
 import io.larkin.tatesocial.repository.ArtworkRepository;
+import io.larkin.tatesocial.repository.UserRepositoryImpl;
 import io.larkin.tatesocial.service.ArtistService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
+import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +26,12 @@ public class HomeController {
 	
 	@Autowired
 	ArtworkRepository artworkRepository;
+	
+	@Autowired
+	Neo4jOperations template;
+	
+	@Autowired
+	UserDao stuff;//UserDao stuff;
 	
 	@RequestMapping("/artist/name/{name}")
 	public String index(@PathVariable String name, Model model) {
@@ -64,9 +76,11 @@ public class HomeController {
 		return "artist/add";
 	}
 	
-	@RequestMapping("/hello")
-	public String hello() {
-		
+	@RequestMapping("/home")
+	@Transactional
+	public String hello(Model model) {
+		User user = stuff.getUser("lcunning");
+		model.addAttribute("user", user);
 		return "hello";
 	}
 	

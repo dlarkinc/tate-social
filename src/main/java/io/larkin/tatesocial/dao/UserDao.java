@@ -1,37 +1,43 @@
-package io.larkin.tatesocial.repository;
+package io.larkin.tatesocial.dao;
 
 import io.larkin.tatesocial.entity.User;
 import io.larkin.tatesocial.service.SocialUserDetails;
+import io.larkin.tatesocial.service.SocialUserDetailsService;
 
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.neo4j.template.Neo4jOperations;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-public class SocialUserDetailsServiceImpl implements SocialUserDetailsService {
-
+@Repository
+public class UserDao implements SocialUserDetailsService, UserDetailsService {
+	
 	@Autowired
-	private Neo4jOperations template;
+	Neo4jTemplate template;
+	
+	@Transactional
+	public User getUser(String login) {
+		return template.findByIndexedValue(User.class, "login", login).to(User.class)
+				.singleOrNull();
+	}
 
 	@Override
 	public SocialUserDetails loadUserByUsername(String login)
-			throws UsernameNotFoundException, DataAccessException {
-		final User user = findByLogin(login);
+			throws UsernameNotFoundException {
+		final User user = getUser(login);
 		if (user == null)
 			throw new UsernameNotFoundException("Username not found: " + login);
 		return new SocialUserDetails(user);
 	}
-
-	private User findByLogin(String login) {
-		return template.lookup(User.class, "login", login).to(User.class)
-				.singleOrNull();
-	}
-
+	
 	@Override
 	public User getUserFromSession() {
 		SecurityContext context = SecurityContextHolder.getContext();
@@ -47,7 +53,7 @@ public class SocialUserDetailsServiceImpl implements SocialUserDetailsService {
     @Override
     @Transactional
     public User register(String login, String name, String password) {
-        User found = findByLogin(login);
+        User found = getUser(login);
         if (found!=null) throw new RuntimeException("Login already taken: "+login);
         if (name==null || name.isEmpty()) throw new RuntimeException("No name provided.");
         if (password==null || password.isEmpty()) throw new RuntimeException("No password provided.");
@@ -67,7 +73,7 @@ public class SocialUserDetailsServiceImpl implements SocialUserDetailsService {
     @Override
     @Transactional
     public void addFriend(String friendLogin, final User user) {
-        User friend = findByLogin(friendLogin);
+        User friend = getUser(friendLogin);
         if (!user.equals(friend)) {
             user.addFriend(friend);
             template.save(user);

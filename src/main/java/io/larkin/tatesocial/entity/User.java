@@ -15,6 +15,8 @@ import org.springframework.security.core.GrantedAuthority;
 @NodeEntity
 public class User {
 
+	public User() {}
+	
 	@GraphId private Long id;
 	
     private static final String SALT = "dsfasdfsfascv77km";
