@@ -4,6 +4,7 @@ import io.larkin.tatesocial.entity.User;
 import io.larkin.tatesocial.service.SocialUserDetails;
 import io.larkin.tatesocial.service.SocialUserDetailsService;
 
+import org.neo4j.graphdb.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class UserRepositoryImpl implements SocialUserDetailsService {
 
+	@Autowired
 	Neo4jOperations template;
 	
 	public UserRepositoryImpl(Neo4jTemplate template) {
@@ -38,9 +40,19 @@ public class UserRepositoryImpl implements SocialUserDetailsService {
 		return new SocialUserDetails(user);
 	}
 
+	@Transactional
 	public User findByLogin(String login) {
-		return template.findByIndexedValue(User.class, "login", login).to(User.class)
+		User user = null;
+		Transaction tx = template.getGraphDatabase().beginTx();
+		try {
+			user = template.findByIndexedValue(User.class, "login", login).to(User.class)
 				.singleOrNull();
+			tx.success();
+			
+		} finally {
+			tx.close();
+		}
+		return user;
 	}
 
 	@Override

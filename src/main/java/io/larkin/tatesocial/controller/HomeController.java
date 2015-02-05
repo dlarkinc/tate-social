@@ -5,6 +5,7 @@ import io.larkin.tatesocial.entity.Artist;
 import io.larkin.tatesocial.entity.Artwork;
 import io.larkin.tatesocial.entity.User;
 import io.larkin.tatesocial.repository.ArtworkRepository;
+import io.larkin.tatesocial.repository.UserRepository;
 import io.larkin.tatesocial.repository.UserRepositoryImpl;
 import io.larkin.tatesocial.service.ArtistService;
 
@@ -28,10 +29,10 @@ public class HomeController {
 	ArtworkRepository artworkRepository;
 	
 	@Autowired
-	Neo4jOperations template;
+	UserRepository userRepository;
 	
 	@Autowired
-	UserDao stuff;//UserDao stuff;
+	Neo4jOperations template;
 	
 	@RequestMapping("/artist/name/{name}")
 	public String index(@PathVariable String name, Model model) {
@@ -77,9 +78,8 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/home")
-	@Transactional
 	public String hello(Model model) {
-		User user = stuff.getUser("lcunning");
+		User user = userRepository.findByLogin("lcunning");
 		model.addAttribute("user", user);
 		return "hello";
 	}

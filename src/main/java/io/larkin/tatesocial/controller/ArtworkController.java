@@ -1,9 +1,9 @@
 package io.larkin.tatesocial.controller;
-
-import io.larkin.tatesocial.entity.Artist;
+ 
+import io.larkin.tatesocial.entity.Artwork;
 import io.larkin.tatesocial.entity.User;
 import io.larkin.tatesocial.repository.UserRepository;
-import io.larkin.tatesocial.service.ArtistService;
+import io.larkin.tatesocial.service.ArtworkService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/artist")
-public class ArtistController {
+@RequestMapping("/artwork")
+public class ArtworkController {
 
 	@Autowired
-	ArtistService artistService;
+	ArtworkService artworkService;
 	
 	@Autowired
 	UserRepository userRepository;
@@ -31,26 +31,26 @@ public class ArtistController {
 	public String index(Model model) {
 		
 		int pageNum = 0;
-		int pageSize = 10;
+		int pageSize = 10; 
 		
-		Page<Artist> artists = artistService.getArtistPage(new PageRequest(pageNum, pageSize));
+		Page<Artwork> artworks = artworkService.getArtworkPage(new PageRequest(pageNum, pageSize));
 		
-		model.addAttribute("artists", artists);
+		model.addAttribute("artworks", artworks);
 		
-		return "artist/index";
+		return "artwork/index";
 	}
 	
 	@RequestMapping("/{nodeId}")
 	public String view(@PathVariable long nodeId, Model model) {
-		Artist artist = artistService.getArtistById(nodeId);
+		Artwork artwork = artworkService.getArtworkById(nodeId);
 		User user = userRepository.getUserFromSession();
 		boolean appreciates = false;
-		if (artist.getUsers().contains(user)) {
+		if (artwork.getUsers().contains(user)) {
 			appreciates = true;
 		}
 		model.addAttribute("appreciates", appreciates);
-		model.addAttribute("artist", artist);
-		return "artist/view";
+		model.addAttribute("artwork", artwork);
+		return "artwork/view";
 	}
 
 	@RequestMapping("/page/{pageNum}")
@@ -58,13 +58,13 @@ public class ArtistController {
 		
 		int pageSize = 10;
 		
-		Sort sort = new Sort(Direction.ASC, "artist.name");
+		Sort sort = new Sort(Direction.ASC, "artwork.title");
 		
-		Page<Artist> artists = artistService.getArtistPage(new PageRequest(pageNum-1, pageSize, sort));
+		Page<Artwork> artworks = artworkService.getArtworkPage(new PageRequest(pageNum-1, pageSize, sort));
 		
-		model.addAttribute("artists", artists);
+		model.addAttribute("artworks", artworks);
 		
-		return "artist/index";
+		return "artwork/index";
 	}
 	
 	@RequestMapping("/{nodeId}/appreciate/toggle")
@@ -72,18 +72,18 @@ public class ArtistController {
 
 		// TODO: Convert this to an ajax handler method
 		
-		Artist artist = artistService.getArtistById(nodeId);
+		Artwork artwork = artworkService.getArtworkById(nodeId);
 		User user = userRepository.getUserFromSession();
 		boolean appreciate = false;
 
-		if (!artist.getUsers().contains(user)) {
+		if (!artwork.getUsers().contains(user)) {
 			appreciate = true;
 		}
-		user.appreciates(artist, appreciate);
+		user.appreciates(artwork, appreciate);
 		userRepository.save(user);
 
 		redir.addFlashAttribute("appreciates", appreciate);
-		redir.addFlashAttribute("artist", artist);
-		return "redirect:/artist/" + nodeId;
+		redir.addFlashAttribute("artwork", artwork);
+		return "redirect:/artwork/" + nodeId;
 	}
 }

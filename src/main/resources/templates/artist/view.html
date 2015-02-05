@@ -1,14 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Artists</title>
+    <title>Artist</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 	<p th:text="'Name: ' + ${artist.name}"/>
-	
-	<p>
-		<a th:href="@{/artist/__${artist.id}__/__${artist.}">Next &gt;</a>
-	</p>
+	<p><a th:href="@{/artist/__${artist.id}__/appreciate/toggle}"><img th:src="@{/images/__${appreciates}? 'thumbsup_yes.png' : 'thumbsup_no.png'__}"/></a></p>
 </body>
 </html> 

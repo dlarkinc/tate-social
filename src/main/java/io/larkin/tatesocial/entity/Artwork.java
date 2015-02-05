@@ -3,6 +3,7 @@ package io.larkin.tatesocial.entity;
 import java.util.Set;
 
 import org.neo4j.graphdb.Direction;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -21,7 +22,7 @@ public class Artwork {
 	public Artwork(String title) { this.title = title; }
 	
 	@RelatedTo(type = "CONTRIBUTED_TO", direction = Direction.INCOMING)
-	private Set<Artist> contributors;
+	@Fetch private Set<Artist> contributors;
 
 	public Set<Artist> getContributors() {
 		return contributors;
@@ -49,5 +50,26 @@ public class Artwork {
 
 	public void setAcno(String acno) {
 		this.acno = acno;
+	}
+	
+	@RelatedTo(type = "APPRECIATES_ARTWORK", direction = Direction.INCOMING)
+	@Fetch private Set<User> users;
+	
+	public Set<User> getUsers() {
+		return users;
+	}
+	
+	@Override
+	public int hashCode() {
+	    return id.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj instanceof Artwork) {
+	        Artwork that = (Artwork) obj;
+	        return this.id.equals(that.id);
+	    }
+	    return false;
 	}
 }

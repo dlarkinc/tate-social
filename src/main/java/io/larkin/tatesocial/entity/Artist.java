@@ -61,4 +61,18 @@ public class Artist {
 	public Set<User> getUsers() {
 		return users;
 	}
+	
+	@Override
+	public int hashCode() {
+	    return id.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj instanceof Artist) {
+	        Artist that = (Artist) obj;
+	        return this.id.equals(that.id);
+	    }
+	    return false;
+	}
 }

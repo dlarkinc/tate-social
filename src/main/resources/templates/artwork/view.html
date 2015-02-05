@@ -1,0 +1,11 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Artwork</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<p th:text="'Title: ' + ${artwork.title}"/>
+	<p><a th:href="@{/artwork/__${artwork.id}__/appreciate/toggle}"><img th:src="@{/images/__${appreciates}? 'thumbsup_yes.png' : 'thumbsup_no.png'__}"/></a></p>
+</body>
+</html> 

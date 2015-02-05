@@ -5,7 +5,7 @@ import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
-@RelationshipEntity(type="CONTRIBUTED_TO")
+@RelationshipEntity(type="APPRECIATES")
 public class Appreciation {
 
 	@GraphId
@@ -21,6 +21,8 @@ public class Appreciation {
 		this.artist = a;
 		this.user = u;
 	}
+	
+	public Appreciation() { }
 	
 	public Long getId() {
 		return id;
