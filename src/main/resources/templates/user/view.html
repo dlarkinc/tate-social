@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>user</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<p th:text="'Login: ' + ${user.login}"/>
+	<p th:text="'Name: ' + ${user.name}"/>
+	<p th:text="'Connections: ' + ${user.friends.size()}"/>
+	<p><a th:href="@{/user/__${user.login}__/befriend/toggle}"><img th:src="@{/images/__${isFriend}? 'thumbsup_yes.png' : 'thumbsup_no.png'__}"/></a></p>
+</body>
+</html> 

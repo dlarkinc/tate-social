@@ -75,7 +75,7 @@ public class HomeController {
 		return "artist/add";
 	}
 	
-	@RequestMapping("/home")
+	@RequestMapping(value={"/home","/"})
 	public String hello(Model model) {
 		User user = userRepository.findByLogin("lcunning");
 		model.addAttribute("user", user);

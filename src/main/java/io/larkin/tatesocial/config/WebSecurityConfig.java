@@ -1,5 +1,6 @@
 package io.larkin.tatesocial.config;
 
+import io.larkin.tatesocial.entity.User;
 import io.larkin.tatesocial.repository.UserRepository;
 import io.larkin.tatesocial.service.UserServiceImpl;
 
@@ -21,7 +22,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/", "/home").permitAll()
+                .antMatchers("/", "/public/**", "/home", "/signup").permitAll()
+                .antMatchers("/user/**","/admin/**").hasRole("ADMIN")//User.Roles.ROLE_ADMIN.toString())
                 .anyRequest().authenticated()
                 .and()
             .formLogin()

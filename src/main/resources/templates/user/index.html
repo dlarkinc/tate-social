@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>users</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body> 
+	<table>
+      <tr>
+        <th>LOGIN</th>
+      </tr>
+      <tr th:each="user : ${users}">
+        <td><a th:href="@{/user/__${user.login}__}"><span th:text="${user.login} + '(' + ${user.name} + ') [' + ${user.friends.size()} + ' connection(s)]'"></span></a></td>
+      </tr>
+    </table>
+    <div th:if="${users.hasPrevious()}">
+    	<a th:href="@{/user/page/__${users.getNumber()}__}">&lt; Prev</a>
+    </div>
+    <div th:if="${users.hasNext()}">
+    	<a th:href="@{/user/page/__${users.getNumber()+2}__}">Next &gt;</a>
+    </div>
+    <p th:text="'Page ' + ${users.getNumber()+1} + ' of ' + ${users.getTotalPages()}"></p>
+</body>
+</html>
