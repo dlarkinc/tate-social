@@ -55,6 +55,13 @@ public class Artist {
 		return movements;
 	}
 	
+	public void joined(Movement movement) {
+		if (movements == null) {
+			movements = new HashSet<Movement>();
+		}
+		movements.add(movement);
+	}
+	
 	@RelatedTo(type = "APPRECIATES", direction = Direction.INCOMING)
 	private Set<User> users;
 	

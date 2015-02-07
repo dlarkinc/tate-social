@@ -25,4 +25,18 @@ public class Gallery {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	@Override
+	public int hashCode() {
+	    return id.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj instanceof Gallery) {
+	        Gallery that = (Gallery) obj;
+	        return this.id.equals(that.id);
+	    }
+	    return false;
+	}
 }

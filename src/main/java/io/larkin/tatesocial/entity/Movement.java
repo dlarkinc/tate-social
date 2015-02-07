@@ -5,6 +5,14 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 
 @NodeEntity
 public class Movement {
+	public Movement() {
+		super();
+	}
+	
+	public Movement(String name) {
+		this.name = name;
+	}
+
 	@GraphId
 	private Long id;
 	
@@ -24,5 +32,19 @@ public class Movement {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public int hashCode() {
+	    return id.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj instanceof Movement) {
+	        Movement that = (Movement) obj;
+	        return this.id.equals(that.id);
+	    }
+	    return false;
 	}
 }

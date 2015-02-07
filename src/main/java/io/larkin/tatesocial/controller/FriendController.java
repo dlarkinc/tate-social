@@ -1,9 +1,6 @@
 package io.larkin.tatesocial.controller;
 
-import io.larkin.tatesocial.entity.Artist;
 import io.larkin.tatesocial.entity.User;
-import io.larkin.tatesocial.repository.UserRepository;
-import io.larkin.tatesocial.service.ArtistService;
 import io.larkin.tatesocial.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class FriendController {
 
 	@Autowired
 	UserService userService;

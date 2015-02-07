@@ -12,6 +12,11 @@ import io.larkin.tatesocial.repository.ArtistRepository;
 @Service
 public class ArtistServiceImpl implements ArtistService {
 
+	public ArtistServiceImpl(ArtistRepository repo) {
+		super();
+		this.repo = repo;
+	}
+
 	@Autowired
 	ArtistRepository repo;
 

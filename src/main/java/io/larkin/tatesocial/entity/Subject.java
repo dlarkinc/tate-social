@@ -55,5 +55,20 @@ public class Subject {
 	public void setChildren(Set<Subject> children) {
 		this.children = children;
 	}
+	
+
+	@Override
+	public int hashCode() {
+	    return id.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj instanceof Subject) {
+	        Subject that = (Subject) obj;
+	        return this.id.equals(that.id);
+	    }
+	    return false;
+	}
 
 }

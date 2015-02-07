@@ -51,10 +51,10 @@ public class ArtistRepositoryTest {
 	}
 	
 	@Autowired
-	ArtistRepository repo;
+	private ArtistRepository repo;
 	
 	@Autowired
-	GraphDatabaseService graphDatabaseService;
+	private GraphDatabaseService graphDatabaseService;
 	
 	@Before
 	public void setUp() throws Exception {
