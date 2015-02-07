@@ -2,8 +2,8 @@ package io.larkin.tatesocial.controller;
  
 import io.larkin.tatesocial.entity.Artwork;
 import io.larkin.tatesocial.entity.User;
-import io.larkin.tatesocial.repository.UserRepository;
 import io.larkin.tatesocial.service.ArtworkService;
+import io.larkin.tatesocial.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,7 +25,7 @@ public class ArtworkController {
 	ArtworkService artworkService;
 	
 	@Autowired
-	UserRepository userRepository;
+	UserService userService;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String index(Model model) {
@@ -43,7 +43,7 @@ public class ArtworkController {
 	@RequestMapping("/{nodeId}")
 	public String view(@PathVariable long nodeId, Model model) {
 		Artwork artwork = artworkService.getArtworkById(nodeId);
-		User user = userRepository.getUserFromSession();
+		User user = userService.getUserFromSession();
 		boolean appreciates = false;
 		if (artwork.getUsers().contains(user)) {
 			appreciates = true;
@@ -73,14 +73,14 @@ public class ArtworkController {
 		// TODO: Convert this to an ajax handler method
 		
 		Artwork artwork = artworkService.getArtworkById(nodeId);
-		User user = userRepository.getUserFromSession();
+		User user = userService.getUserFromSession();
 		boolean appreciate = false;
 
 		if (!artwork.getUsers().contains(user)) {
 			appreciate = true;
 		}
 		user.appreciates(artwork, appreciate);
-		userRepository.save(user);
+		userService.saveUser(user);
 
 		redir.addFlashAttribute("appreciates", appreciate);
 		redir.addFlashAttribute("artwork", artwork);

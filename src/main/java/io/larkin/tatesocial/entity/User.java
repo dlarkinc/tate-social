@@ -20,7 +20,10 @@ public class User {
 	@GraphId private Long id;
 	
     private static final String SALT = "dsfasdfsfascv77km";
-    public static final String FRIEND = "FRIEND";
+    public static final String FRIEND_OF = "FRIEND_OF";
+    public static final String HAS_GALLERY = "HAS_GALLERY";
+    public static final String APPRECIATES_ARTIST = "APPRECIATES_ARTIST";
+    public static final String APPRECIATES_ARTWORK = "APPRECIATES_ARTWORK";
 	
 	@Indexed(unique=true)
 	private String login;
@@ -42,13 +45,21 @@ public class User {
         return new Md5PasswordEncoder().encodePassword(password, SALT);
     }
     
-    @RelatedTo(type = FRIEND, direction = Direction.BOTH)
-    @Fetch Set<User> friends;
+    @RelatedTo(type = FRIEND_OF, direction = Direction.BOTH)
+    @Fetch private Set<User> friends;
 
-    public void addFriend(User friend) {
-        this.friends.add(friend);
+    public void befriend(User friend, boolean flag) {
+    	if (flag) {
+    		this.friends.add(friend);
+    	} else {
+    		this.friends.remove(friend);
+    	}
     }
     
+	public Set<User> getFriends() {
+		return friends;
+	}
+
 	public Roles[] getRoles() {
 		return roles;
 	}
@@ -85,15 +96,15 @@ public class User {
 		this.name = name;
 	}
 	
-	@RelatedTo(type = "APPRECIATES", direction=Direction.OUTGOING)
-	private @Fetch Set<Artist> artists;
+	@RelatedTo(type = APPRECIATES_ARTIST, direction=Direction.OUTGOING)
+	private Set<Artist> artists;
 	
 	public Set<Artist> getArtists() {
 		return artists;
 	}
 
-	@RelatedTo(type = "APPRECIATES_ARTWORK", direction=Direction.OUTGOING)
-	private @Fetch Set<Artwork> artworks;
+	@RelatedTo(type = APPRECIATES_ARTWORK, direction=Direction.OUTGOING)
+	private Set<Artwork> artworks;
 	
 	public Set<Artwork> getArtworks() {
 		return artworks;
@@ -146,4 +157,10 @@ public class User {
     	}
     }
 
+	@RelatedTo(type = HAS_GALLERY, direction=Direction.OUTGOING)
+	private @Fetch Set<Gallery> galleries;
+	
+	public Set<Gallery> getGalleries() {
+		return galleries;
+	}
 }

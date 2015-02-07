@@ -5,9 +5,9 @@ import io.larkin.tatesocial.entity.Artwork;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.annotation.Query;
-import org.springframework.data.neo4j.repository.GraphRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface ArtworkRepository extends GraphRepository<Artwork>{
+public interface ArtworkRepository extends PagingAndSortingRepository<Artwork, String>{
 	
 	Artwork findByTitle(String title);
 	

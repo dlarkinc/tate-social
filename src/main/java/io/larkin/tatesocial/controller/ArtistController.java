@@ -4,6 +4,7 @@ import io.larkin.tatesocial.entity.Artist;
 import io.larkin.tatesocial.entity.User;
 import io.larkin.tatesocial.repository.UserRepository;
 import io.larkin.tatesocial.service.ArtistService;
+import io.larkin.tatesocial.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,7 +26,7 @@ public class ArtistController {
 	ArtistService artistService;
 	
 	@Autowired
-	UserRepository userRepository;
+	UserService userService;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String index(Model model) {
@@ -43,7 +44,7 @@ public class ArtistController {
 	@RequestMapping("/{nodeId}")
 	public String view(@PathVariable long nodeId, Model model) {
 		Artist artist = artistService.getArtistById(nodeId);
-		User user = userRepository.getUserFromSession();
+		User user = userService.getUserFromSession();
 		boolean appreciates = false;
 		if (artist.getUsers().contains(user)) {
 			appreciates = true;
@@ -73,14 +74,14 @@ public class ArtistController {
 		// TODO: Convert this to an ajax handler method
 		
 		Artist artist = artistService.getArtistById(nodeId);
-		User user = userRepository.getUserFromSession();
+		User user = userService.getUserFromSession();
 		boolean appreciate = false;
 
 		if (!artist.getUsers().contains(user)) {
 			appreciate = true;
 		}
 		user.appreciates(artist, appreciate);
-		userRepository.save(user);
+		userService.saveUser(user);
 
 		redir.addFlashAttribute("appreciates", appreciate);
 		redir.addFlashAttribute("artist", artist);
