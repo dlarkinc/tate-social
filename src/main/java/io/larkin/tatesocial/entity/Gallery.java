@@ -1,7 +1,12 @@
 package io.larkin.tatesocial.entity;
 
+import java.util.Set;
+
+import org.neo4j.graphdb.Direction;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 
 @NodeEntity
 public class Gallery {
@@ -26,6 +31,13 @@ public class Gallery {
 		this.name = name;
 	}
 	
+	@RelatedTo(type = "LIST_ARTWORK",direction=Direction.OUTGOING)
+	private @Fetch Set<Artwork> artworks;
+	
+	public Set<Artwork> getArtworks() {
+		return artworks;
+	}
+	
 	@Override
 	public int hashCode() {
 	    return id.hashCode();
@@ -38,5 +50,12 @@ public class Gallery {
 	        return this.id.equals(that.id);
 	    }
 	    return false;
+	}
+	
+	@RelatedTo(type = "HAS_GALLERY", direction=Direction.INCOMING)
+	private @Fetch User user;
+	
+	public User getUser() {
+		return user;
 	}
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Galleries</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<table>
+      <tr>
+        <th>NAME</th>
+      </tr>
+      <tr th:each="gallery : ${galleries}">
+        <td><a th:href="@{/gallery/__${gallery.id}__}"><span th:text="${gallery.name} + '[' + ${gallery.artworks.size()} + ' artwork(s)]'"></span></a></td>
+      </tr>
+    </table>
+    <div th:if="${gallerys.hasPrevious()}">
+    	<a th:href="@{/gallery/page/__${gallerys.getNumber()}__}">&lt; Prev</a>
+    </div>
+    <div th:if="${gallerys.hasNext()}">
+    	<a th:href="@{/gallery/page/__${gallerys.getNumber()+2}__}">Next &gt;</a>
+    </div>
+    <p th:text="'Page ' + ${gallerys.getNumber()+1} + ' of ' + ${gallerys.getTotalPages()}"></p>
+</body>
+</html>

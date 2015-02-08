@@ -27,6 +27,13 @@ public class Artwork {
 	public Set<Artist> getContributors() {
 		return contributors;
 	}
+	
+	@RelatedTo(type = "LIST_ARTWORK", direction = Direction.INCOMING)
+	private Set<Gallery> galleries;
+
+	public Set<Gallery> getGalleries() {
+		return galleries;
+	}
 
 	public Long getId() {
 		return id;
