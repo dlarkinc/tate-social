@@ -1,6 +1,5 @@
 package io.larkin.tatesocial.entity;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.neo4j.graphdb.Direction;

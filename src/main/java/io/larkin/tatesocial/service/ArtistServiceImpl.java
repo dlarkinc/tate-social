@@ -17,6 +17,8 @@ public class ArtistServiceImpl implements ArtistService {
 		this.repo = repo;
 	}
 
+	public ArtistServiceImpl() { }
+	
 	@Autowired
 	ArtistRepository repo;
 
